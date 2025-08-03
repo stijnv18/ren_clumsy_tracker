@@ -15,6 +15,24 @@ from .models import Incident
 from django import forms
 
 class IncidentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['friend_name'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Who was clumsy?'
+        })
+        self.fields['description'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Describe the clumsy moment...'
+        })
+        self.fields['date'].widget.attrs.update({
+            'class': 'form-control',
+            'type': 'datetime-local'
+        })
+        self.fields['clumsy_level'].widget.attrs.update({
+            'class': 'form-select'
+        })
+
     class Meta:
         model = Incident
         fields = ['friend_name', 'description', 'date', 'clumsy_level']
