@@ -2,16 +2,19 @@
 {% block title %}Clumsy Tracker{% endblock %}
 {% block content %}
     <h1>Welcome to Clumsy Tracker!</h1>
-    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.5em; margin-bottom:1em;">
-        <a href="{% url 'add_incident' %}"><button class="btn">Add a Clumsy Moment</button></a>
-        <a href="{% url 'search_incidents' %}"><button class="btn">Search Clumsy Moments</button></a>
+    <div class="d-flex flex-wrap justify-content-center mb-3 gap-2">
+        <a href="{% url 'add_incident' %}"><button class="cute-btn">Add a Clumsy Moment</button></a>
+        <a href="{% url 'search_incidents' %}"><button class="cute-btn">Search Clumsy Moments</button></a>
     </div>
     <h2>Recent Clumsy Moments</h2>
     {% for incident in incidents %}
-        <div class="incident" style="background:#ffe6fa; border-radius:12px; box-shadow:0 2px 8px #e0e0e0; margin:1em 0; padding:1em;">
-            <strong style="color:#a259e6;">{{ incident.friend_name }}</strong> on <em>{{ incident.date|date:'Y-m-d H:i' }}</em><br>
-            <span>{{ incident.description }}</span><br>
-            <small>Clumsy Level: <span style="color:#d291fa;">{{ incident.get_clumsy_level_display }}</span></small>
+        <div class="card mb-3 shadow-sm" style="background:#ffe6fa; border-radius:16px;">
+            <div class="card-body">
+                <h5 class="card-title" style="color:#a259e6;">{{ incident.friend_name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ incident.date|date:'Y-m-d H:i' }}</h6>
+                <p class="card-text">{{ incident.description }}</p>
+                <span class="badge rounded-pill" style="background:#d291fa; color:#fff;">{{ incident.get_clumsy_level_display }}</span>
+            </div>
         </div>
     {% empty %}
         <p>No clumsy moments yet!</p>
