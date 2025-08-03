@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Search Clumsy Moments</title>
-    <style>
-        body { font-family: 'Comic Sans MS', cursive, sans-serif; background: #f9f6ff; }
-        h1 { color: #a259e6; }
-        form { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #e0e0e0; margin: 2em auto; padding: 2em; max-width: 400px; }
-        label { display: block; margin-top: 1em; }
-        input, select { width: 100%; padding: 0.5em; margin-top: 0.5em; border-radius: 5px; border: 1px solid #ccc; }
-        button { background: #a259e6; color: #fff; border: none; padding: 0.5em 1em; border-radius: 5px; cursor: pointer; margin-top: 1em; }
-        .incident { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #e0e0e0; margin: 1em 0; padding: 1em; }
-    </style>
-</head>
-<body>
+{% extends 'incidents/base.html' %}
+{% block title %}Search Clumsy Moments{% endblock %}
+{% block content %}
     <h1>Search Clumsy Moments</h1>
-    <form method="get">
+    <form method="get" style="margin-bottom:1em;">
         <label for="friend_name">Friend Name:</label>
         <input type="text" name="friend_name" id="friend_name" value="{{ request.GET.friend_name }}">
         <label for="clumsy_level">Clumsy Level:</label>
@@ -25,18 +13,17 @@
             <option value="3" {% if request.GET.clumsy_level == '3' %}selected{% endif %}>Major</option>
             <option value="4" {% if request.GET.clumsy_level == '4' %}selected{% endif %}>Legendary</option>
         </select>
-        <button type="submit">Search</button>
+        <button type="submit" class="btn">Search</button>
     </form>
     <h2>Results</h2>
     {% for incident in incidents %}
-        <div class="incident">
-            <strong>{{ incident.friend_name }}</strong> on <em>{{ incident.date }}</em><br>
+        <div class="incident" style="background:#ffe6fa; border-radius:12px; box-shadow:0 2px 8px #e0e0e0; margin:1em 0; padding:1em;">
+            <strong style="color:#a259e6;">{{ incident.friend_name }}</strong> on <em>{{ incident.date|date:'Y-m-d H:i' }}</em><br>
             <span>{{ incident.description }}</span><br>
-            <small>Clumsy Level: {{ incident.get_clumsy_level_display }}</small>
+            <small>Clumsy Level: <span style="color:#d291fa;">{{ incident.get_clumsy_level_display }}</span></small>
         </div>
     {% empty %}
         <p>No clumsy moments found!</p>
     {% endfor %}
-    <a href="{% url 'home' %}">Back to Home</a>
-</body>
-</html>
+    <a href="{% url 'home' %}"><button class="btn" style="background:#d291fa;">Back to Home</button></a>
+{% endblock %}
