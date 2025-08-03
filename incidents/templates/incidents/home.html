@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clumsy Tracker</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background: #f9f6ff; }
+        h1 { color: #a259e6; }
+        .incident { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #e0e0e0; margin: 1em 0; padding: 1em; }
+        .add-btn { background: #a259e6; color: #fff; border: none; padding: 0.5em 1em; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Clumsy Tracker!</h1>
+    <a href="{% url 'add_incident' %}"><button class="add-btn">Add a Clumsy Moment</button></a>
+    <h2>Recent Clumsy Moments</h2>
+    {% for incident in incidents %}
+        <div class="incident">
+            <strong>{{ incident.friend_name }}</strong> on <em>{{ incident.date }}</em><br>
+            <span>{{ incident.description }}</span><br>
+            <small>Clumsy Level: {{ incident.get_clumsy_level_display }}</small>
+        </div>
+    {% empty %}
+        <p>No clumsy moments yet!</p>
+    {% endfor %}
+</body>
+</html>

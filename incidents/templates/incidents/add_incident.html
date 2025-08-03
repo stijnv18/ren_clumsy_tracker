@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Clumsy Moment</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background: #f9f6ff; }
+        h1 { color: #a259e6; }
+        form { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #e0e0e0; margin: 2em auto; padding: 2em; max-width: 400px; }
+        label { display: block; margin-top: 1em; }
+        input, textarea, select { width: 100%; padding: 0.5em; margin-top: 0.5em; border-radius: 5px; border: 1px solid #ccc; }
+        button { background: #a259e6; color: #fff; border: none; padding: 0.5em 1em; border-radius: 5px; cursor: pointer; margin-top: 1em; }
+    </style>
+</head>
+<body>
+    <h1>Add a Clumsy Moment</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>
