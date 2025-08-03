@@ -17,7 +17,7 @@ from django import forms
 class IncidentForm(forms.ModelForm):
     class Meta:
         model = Incident
-        fields = ['friend_name', 'description', 'clumsy_level']
+        fields = ['friend_name', 'description', 'date', 'clumsy_level']
 
 def home(request):
     incidents = Incident.objects.order_by('-date')[:10]
