@@ -1,4 +1,4 @@
-# Dockerfile for Django app
+#Dev Dockerfile for Clumsy Tracker
 FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
