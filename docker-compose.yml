@@ -8,6 +8,9 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       DEBUG: ${DEBUG}
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}}
     depends_on:
       - db
   db:
