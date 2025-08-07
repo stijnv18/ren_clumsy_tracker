@@ -14,8 +14,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      POSTGRES_DB: clumsy_db
-      POSTGRES_USER: clumsy_user
-      POSTGRES_PASSWORD: clumsy_pass
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 volumes:
   postgres_data:
