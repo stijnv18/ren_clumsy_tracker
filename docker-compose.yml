@@ -4,6 +4,10 @@ services:
     image: stinov21/clumsy-tracker:latest
     ports:
       - "8000:8000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
     depends_on:
       - db
   db:
