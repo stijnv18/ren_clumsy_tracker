@@ -144,3 +144,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# --- HTTPS/SSL Security Settings ---
+# These settings help secure your Django app when served over HTTPS (e.g., via Cloudflare or a reverse proxy)
+SECURE_SSL_REDIRECT = False  # Redirect all HTTP to HTTPS
+SESSION_COOKIE_SECURE = False  # Cookies only sent over HTTPS
+CSRF_COOKIE_SECURE = False  # CSRF cookie only sent over HTTPS
+SECURE_HSTS_SECONDS = 31536000  # Enforce HTTPS for 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+# If behind a proxy/load balancer (like Nginx/Cloudflare), set this:
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
