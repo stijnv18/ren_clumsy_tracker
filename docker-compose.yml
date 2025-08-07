@@ -4,8 +4,6 @@ services:
     image: stinov21/clumsy-tracker:latest
     ports:
       - "8000:8000"
-    env_file:
-      - .env
     depends_on:
       - db
   db:
@@ -13,8 +11,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      POSTGRES_DB: clumsy_db
-      POSTGRES_USER: clumsy_user
-      POSTGRES_PASSWORD: clumsy_pass
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 volumes:
   postgres_data:
