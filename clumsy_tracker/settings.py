@@ -77,8 +77,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'clumsy_tracker.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+# Debug: Print out the database environment variables being used
+print("[DEBUG] Django DB ENV:")
+print("  ENGINE:", os.getenv('DB_ENGINE', 'django.db.backends.postgresql'))
+print("  NAME:", os.getenv('POSTGRES_DB', ''))
+print("  USER:", os.getenv('POSTGRES_USER', ''))
+print("  PASSWORD:", os.getenv('POSTGRES_PASSWORD', ''))
+print("  HOST:", os.getenv('DB_HOST', 'db'))
+print("  PORT:", os.getenv('DB_PORT', '5432'))
+
 
 DATABASES = {
     'default': {
