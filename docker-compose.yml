@@ -34,7 +34,7 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-www:/var/www/certbot
-    command: tail -f /dev/null
+    command: certbot certonly --webroot --webroot-path=/var/www/certbot --email verheyden.stijn2@gmail.com --agree-tos --no-eff-email -d rens-clumsyness.help -d www.rens-clumsyness.help
     depends_on:
       - nginx
 
