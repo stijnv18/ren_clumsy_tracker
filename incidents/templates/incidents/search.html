@@ -21,16 +21,16 @@
     </form>
     <h2>Results</h2>
     {% for incident in incidents %}
-        <div class="card mb-3 shadow-sm" style="background:#ffe6fa; border-radius:16px;">
+        <div class="card mb-3 shadow-sm incident-card">
             <div class="card-body">
-                <h5 class="card-title" style="color:#a259e6;">{{ incident.friend_name }}</h5>
+                <h5 class="card-title">{{ incident.friend_name }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ incident.date|date:'Y-m-d H:i' }}</h6>
                 <p class="card-text">{{ incident.description }}</p>
-                <span class="badge rounded-pill" style="background:#d291fa; color:#fff;">{{ incident.get_clumsy_level_display }}</span>
+                <span class="badge rounded-pill badge-clumsy">{{ incident.get_clumsy_level_display }}</span>
             </div>
         </div>
     {% empty %}
         <p>No clumsy moments found!</p>
     {% endfor %}
-    <a href="{% url 'home' %}"><button class="cute-btn" style="background:#d291fa;">Back to Home</button></a>
+    <a href="{% url 'home' %}"><button class="cute-btn">Back to Home</button></a>
 {% endblock %}
