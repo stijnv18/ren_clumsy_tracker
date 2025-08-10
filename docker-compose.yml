@@ -18,6 +18,7 @@ services:
     image: nginx:alpine
     ports:
       - "8080:80"
+      - "8443:443"
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-www:/var/www/certbot
@@ -27,13 +28,14 @@ services:
     depends_on:
       - web
 
-  #certbot:
-    #image: certbot/certbot
-    #volumes:
-    #  - certbot-etc:/etc/letsencrypt
-    #  - certbot-www:/var/www/certbot
-    #depends_on:
-    #  - nginx
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    depends_on:
+      - nginx
 
   db:
     image: postgres:15
@@ -67,11 +69,22 @@ configs:
                   root /var/www/certbot;
               }
               location / {
+                  return 301 https://$$host$$request_uri;
+              }
+          }
+          server {
+              listen 443 ssl;
+              server_name rens-clumsyness.help www.rens-clumsyness.help;
+              ssl_certificate /etc/letsencrypt/live/rens-clumsyness.help/fullchain.pem;
+              ssl_certificate_key /etc/letsencrypt/live/rens-clumsyness.help/privkey.pem;
+              ssl_protocols TLSv1.2 TLSv1.3;
+              ssl_ciphers HIGH:!aNULL:!MD5;
+              location / {
                   proxy_pass http://web:8000;
                   proxy_set_header Host $$host;
                   proxy_set_header X-Real-IP $$remote_addr;
                   proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
-                  proxy_set_header X-Forwarded-Proto https;
+                  proxy_set_header X-Forwarded-Proto $$scheme;
               }
           }
       }
