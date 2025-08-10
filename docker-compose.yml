@@ -19,24 +19,22 @@ services:
     ports:
       - "8080:80"
       - "8443:443"
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-www:/var/www/certbot
     configs:
       - source: nginx_conf
         target: /etc/nginx/nginx.conf
+    command: >
+      sh -c "
+      apk add --no-cache openssl &&
+      mkdir -p /etc/ssl/certs /etc/ssl/private &&
+      openssl req -x509 -nodes -days 365 -newkey rsa:2048 
+      -keyout /etc/ssl/private/selfsigned.key 
+      -out /etc/ssl/certs/selfsigned.crt 
+      -subj '/C=US/ST=State/L=City/O=Organization/CN=rens-clumsyness.help' &&
+      nginx -g 'daemon off;'
+      "
     depends_on:
       - web
 
-
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-www:/var/www/certbot
-    command: certonly --webroot --webroot-path=/var/www/certbot --email verheyden.stijn2@gmail.com --agree-tos --no-eff-email -d rens-clumsyness.help -d www.rens-clumsyness.help
-    depends_on:
-      - nginx
 
   db:
     image: postgres:15
@@ -49,8 +47,6 @@ services:
 
 volumes:
   postgres_data:
-  certbot-etc:
-  certbot-www:
 
 configs:
   nginx_conf:
@@ -66,18 +62,13 @@ configs:
           server {
               listen 80;
               server_name rens-clumsyness.help www.rens-clumsyness.help;
-              location /.well-known/acme-challenge/ {
-                  root /var/www/certbot;
-              }
-              location / {
-                  return 301 https://$$host$$request_uri;
-              }
+              return 301 https://$$host$$request_uri;
           }
           server {
               listen 443 ssl;
               server_name rens-clumsyness.help www.rens-clumsyness.help;
-              ssl_certificate /etc/letsencrypt/live/rens-clumsyness.help/fullchain.pem;
-              ssl_certificate_key /etc/letsencrypt/live/rens-clumsyness.help/privkey.pem;
+              ssl_certificate /etc/ssl/certs/selfsigned.crt;
+              ssl_certificate_key /etc/ssl/private/selfsigned.key;
               ssl_protocols TLSv1.2 TLSv1.3;
               ssl_ciphers HIGH:!aNULL:!MD5;
               location / {
